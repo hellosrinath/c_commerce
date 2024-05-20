@@ -12,7 +12,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -27,20 +26,21 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Spacer(),
-            AppLogo(),
-            Spacer(),
-            CircularProgressIndicator(),
-            SizedBox(height: 10),
-            Text('Version: 1.0.0'),
-            SizedBox(height: 10),
-          ],
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            children: [
+              Spacer(),
+              AppLogo(),
+              Spacer(),
+              CircularProgressIndicator(),
+              SizedBox(height: 10),
+              Text('Version: 1.0.0'),
+              SizedBox(height: 10),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
