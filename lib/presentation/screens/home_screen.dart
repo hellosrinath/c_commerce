@@ -1,8 +1,10 @@
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/utility/assets_path.dart';
 import 'package:c_commerce/presentation/widgets/app_bar_icon_action_button.dart';
+import 'package:c_commerce/presentation/widgets/category_item.dart';
 import 'package:c_commerce/presentation/widgets/home_carousel_slider.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:c_commerce/presentation/widgets/product_card.dart';
+import 'package:c_commerce/presentation/widgets/section_header.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -29,10 +31,38 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _buildSearchTextField(),
               const SizedBox(height: 16),
-              const HomeCarouselSlider()
+              const HomeCarouselSlider(),
+              const SizedBox(height: 16),
+              SectionHeader(
+                title: 'Category',
+                onTapSeeAll: () {},
+              ),
+              _buildCategoryListView(),
+              const SizedBox(height: 8),
+              SectionHeader(
+                title: 'Popular Product',
+                onTapSeeAll: () {},
+              ),
+              const ProductCard()
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryListView() {
+    return SizedBox(
+      height: 120,
+      child: ListView.separated(
+        itemCount: 5,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return const CategoryItem();
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(width: 8 * 2);
+        },
       ),
     );
   }
@@ -86,3 +116,5 @@ class _HomeScreenState extends State<HomeScreen> {
     _searchBoxTEController.dispose();
   }
 }
+
+

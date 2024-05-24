@@ -16,14 +16,23 @@ class _CraftyBayState extends State<CraftyBay> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
-      theme: ThemeData(
-        colorSchemeSeed: AppColor.primaryColor,
-        progressIndicatorTheme: const ProgressIndicatorThemeData(
-          color: AppColor.primaryColor,
+      theme: _buildThemeData(),
+    );
+  }
+
+  ThemeData _buildThemeData() {
+    return ThemeData(
+      colorSchemeSeed: AppColor.primaryColor,
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: AppColor.primaryColor,
+      ),
+      textTheme: _textTheme(),
+      inputDecorationTheme: _inputDecorationTheme(),
+      elevatedButtonTheme: _elevatedButtonThemeData(),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: AppColor.primaryColor,
         ),
-        textTheme: _textTheme(),
-        inputDecorationTheme: _inputDecorationTheme(),
-        elevatedButtonTheme: _elevatedButtonThemeData(),
       ),
     );
   }
