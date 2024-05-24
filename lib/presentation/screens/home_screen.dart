@@ -40,10 +40,22 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildCategoryListView(),
               const SizedBox(height: 8),
               SectionHeader(
-                title: 'Popular Product',
+                title: 'Popular',
                 onTapSeeAll: () {},
               ),
-              const ProductCard()
+              _buildProductListView(),
+              const SizedBox(height: 8),
+              SectionHeader(
+                title: 'Special',
+                onTapSeeAll: () {},
+              ),
+              _buildProductListView(),
+              const SizedBox(height: 8),
+              SectionHeader(
+                title: 'New',
+                onTapSeeAll: () {},
+              ),
+              _buildProductListView(),
             ],
           ),
         ),
@@ -59,6 +71,22 @@ class _HomeScreenState extends State<HomeScreen> {
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return const CategoryItem();
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return const SizedBox(width: 8 * 2);
+        },
+      ),
+    );
+  }
+
+  Widget _buildProductListView() {
+    return SizedBox(
+      height: 210,
+      child: ListView.separated(
+        itemCount: 5,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          return const ProductCard();
         },
         separatorBuilder: (BuildContext context, int index) {
           return const SizedBox(width: 8 * 2);
@@ -116,5 +144,3 @@ class _HomeScreenState extends State<HomeScreen> {
     _searchBoxTEController.dispose();
   }
 }
-
-

@@ -1,5 +1,6 @@
 import 'package:c_commerce/presentation/screens/email_verificaton_screen.dart';
 import 'package:c_commerce/presentation/screens/home_screen.dart';
+import 'package:c_commerce/presentation/screens/main_bottom_navbar_screen.dart';
 import 'package:c_commerce/presentation/widgets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _moveToHomeScreen() async {
     await Future.delayed(const Duration(seconds: 2));
-    Get.off(() => const HomeScreen());
+    Get.off(() => const MainBottomNavBarScreen());
   }
 
   @override

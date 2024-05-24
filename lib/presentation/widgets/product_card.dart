@@ -1,15 +1,20 @@
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/utility/assets_path.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,
+    this.showAddToWishList = true,
   });
+
+  final bool showAddToWishList;
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      surfaceTintColor: Colors.white,
       elevation: 3,
       color: Colors.white,
       shape: RoundedRectangleBorder(
@@ -23,7 +28,7 @@ class ProductCard extends StatelessWidget {
               width: 150,
               decoration: BoxDecoration(
                 color: AppColor.primaryColor.withOpacity(0.1),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(8),
                   topRight: Radius.circular(8),
                 ),
@@ -45,7 +50,7 @@ class ProductCard extends StatelessWidget {
                     maxLines: 2,
                     style: TextStyle(
                       overflow: TextOverflow.ellipsis,
-                      fontSize: 15,
+                      fontSize: 13,
                       color: Colors.grey,
                       fontWeight: FontWeight.w500,
                     ),
@@ -73,25 +78,36 @@ class ProductCard extends StatelessWidget {
                           Text('3.5'),
                         ],
                       ),
-                      Card(
-                        color: AppColor.primaryColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(2.0),
-                          child: Icon(
-                            Icons.favorite_border_outlined,
-                            size: 16,
-                            color: Colors.white,
-                          ),
-                        ),
-                      )
+                      _buildAddToWishProduct()
                     ],
                   )
                 ],
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAddToWishProduct() {
+    return Visibility(
+      visible: showAddToWishList,
+      replacement: _getIconButton(Icons.delete),
+      child: _getIconButton(Icons.favorite_border_outlined),
+    );
+  }
+
+  Widget _getIconButton(IconData iconData) {
+    return Card(
+      color: AppColor.primaryColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      child: Padding(
+        padding: const EdgeInsets.all(2.0),
+        child: Icon(
+          iconData,
+          size: 16,
+          color: Colors.white,
         ),
       ),
     );

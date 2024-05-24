@@ -1,3 +1,4 @@
+import 'package:c_commerce/controller_binder.dart';
 import 'package:c_commerce/presentation/screens/splash_screen.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class _CraftyBayState extends State<CraftyBay> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: ControllerBinder(),
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
       theme: _buildThemeData(),
