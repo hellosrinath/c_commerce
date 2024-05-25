@@ -1,6 +1,7 @@
 import 'package:c_commerce/presentation/state_holders/main_bottom_nav_bar_controller.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/utility/assets_path.dart';
+import 'package:c_commerce/presentation/widgets/cart_product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
@@ -38,7 +39,7 @@ class _CartListScreenState extends State<CartListScreen> {
               child: ListView.builder(
                 itemCount: 15,
                 itemBuilder: (context, index) {
-                  return _buildCardProductItem();
+                  return const CartProductItem();
                 },
               ),
             ),
