@@ -2,10 +2,8 @@ import 'package:c_commerce/presentation/screens/product_details_screen.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/utility/assets_path.dart';
 import 'package:c_commerce/presentation/widgets/wish_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class ProductCard extends StatelessWidget {
   const ProductCard({

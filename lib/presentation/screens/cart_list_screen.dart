@@ -43,14 +43,14 @@ class _CartListScreenState extends State<CartListScreen> {
                 },
               ),
             ),
-            _buildCheckoutWidget()
+            _buildAddToCartSection()
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCheckoutWidget() {
+  Widget _buildAddToCartSection() {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
