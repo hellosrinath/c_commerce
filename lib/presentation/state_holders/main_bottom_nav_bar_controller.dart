@@ -11,7 +11,10 @@ class MainBottomNavBarController extends GetxController {
   }
 
   void moveToHomeScreen() {
-    _selectedIndex = 0;
-    update();
+    changeIndex(0);
+  }
+
+  void selectCategory() {
+    changeIndex(1);
   }
 }

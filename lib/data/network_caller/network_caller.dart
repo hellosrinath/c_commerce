@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:c_commerce/app.dart';
 import 'package:c_commerce/data/models/network_response.dart';
@@ -9,7 +10,12 @@ import 'package:http/http.dart';
 class NetworkCaller {
   static Future<NetworkResponse> getRequest({required String url}) async {
     try {
+      log(url);
+
       final Response response = await get(Uri.parse(url));
+
+      log(response.statusCode.toString());
+      log(response.body.toString());
 
       if (response.statusCode == 200) {
         final decodedData = jsonDecode(response.body);
@@ -44,13 +50,17 @@ class NetworkCaller {
     Map<String, dynamic>? body,
   }) async {
     try {
+      log(url);
       final Response response = await post(
         Uri.parse(url),
-        body: body,
+        body: jsonEncode(body),
         headers: {
           'accept': 'application/json',
         },
       );
+
+      log(response.statusCode.toString());
+      log(response.body.toString());
 
       if (response.statusCode == 200) {
         final decodedData = jsonDecode(response.body);

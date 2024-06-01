@@ -1,5 +1,3 @@
-import 'package:c_commerce/presentation/screens/email_verificaton_screen.dart';
-import 'package:c_commerce/presentation/screens/home_screen.dart';
 import 'package:c_commerce/presentation/screens/main_bottom_navbar_screen.dart';
 import 'package:c_commerce/presentation/widgets/app_logo.dart';
 import 'package:flutter/material.dart';

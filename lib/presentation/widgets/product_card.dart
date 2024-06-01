@@ -1,6 +1,8 @@
+import 'package:c_commerce/data/models/product.dart';
 import 'package:c_commerce/presentation/screens/product_details_screen.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/utility/assets_path.dart';
+import 'package:c_commerce/presentation/widgets/cache_network_image.dart';
 import 'package:c_commerce/presentation/widgets/wish_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,15 +11,19 @@ class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,
     this.showAddToWishList = true,
+    required this.product,
   });
 
   final bool showAddToWishList;
+  final Product product;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Get.to(
-        () => const ProductDetailScreen(),
+        () => ProductDetailScreen(
+          productId: product.id!,
+        ),
       ),
       child: Card(
         surfaceTintColor: Colors.white,
@@ -41,8 +47,10 @@ class ProductCard extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    AssetsPath.productDummy,
+                  child: CacheNetworkImage(
+                    url: product.image ?? '',
+                    width: 150,
+                    height: 150,
                   ),
                 ),
               ),
@@ -51,17 +59,17 @@ class ProductCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Nike New Collection 2024',
+                    Text(
+                      product.title ?? '',
                       maxLines: 2,
-                      style: TextStyle(
+                      style: const TextStyle(
                         overflow: TextOverflow.ellipsis,
                         fontSize: 13,
                         color: Colors.grey,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    _buildProductSizes()
+                    _buildProductSizes(product)
                   ],
                 ),
               )
@@ -72,15 +80,15 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget _buildProductSizes() {
-    return const Wrap(
+  Widget _buildProductSizes(Product product) {
+    return Wrap(
       spacing: 5,
       crossAxisAlignment: WrapCrossAlignment.center,
       alignment: WrapAlignment.start,
       children: [
         Text(
-          '\$30',
-          style: TextStyle(
+          '\$${product.price}',
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: AppColor.primaryColor,
@@ -88,15 +96,15 @@ class ProductCard extends StatelessWidget {
         ),
         Wrap(
           children: [
-            Icon(
+            const Icon(
               Icons.star,
               color: Colors.amber,
               size: 20,
             ),
-            Text('3.5'),
+            Text('${product.star}'),
           ],
         ),
-        WishButton()
+        const WishButton()
       ],
     );
   }

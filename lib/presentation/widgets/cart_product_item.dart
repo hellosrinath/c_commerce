@@ -96,7 +96,6 @@ class _CartProductItemState extends State<CartProductItem> {
         ],
       ),
     );
-    ;
   }
 
   Widget _buildItemCount() {

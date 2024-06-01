@@ -37,13 +37,14 @@ class _WishListScreenState extends State<WishListScreen> {
             childAspectRatio: 0.85,
           ),
           itemBuilder: (context, index) {
-            return const Padding(
+           /* return const Padding(
               padding: EdgeInsets.all(8.0),
               child: FittedBox(
-                  child: ProductCard(
-                showAddToWishList: false,
-              )),
-            );
+                child: ProductCard(
+                  showAddToWishList: false,
+                ),
+              ),
+            );*/
           },
         ),
       ),

@@ -1,14 +1,23 @@
-import 'package:c_commerce/presentation/utility/app_colors.dart';
+import 'dart:developer';
+
+import 'package:c_commerce/data/models/category.dart';
+import 'package:c_commerce/data/models/product.dart';
+import 'package:c_commerce/presentation/state_holders/category_list_controller.dart';
+import 'package:c_commerce/presentation/state_holders/home_slider_controller.dart';
+import 'package:c_commerce/presentation/state_holders/main_bottom_nav_bar_controller.dart';
+import 'package:c_commerce/presentation/state_holders/new_product_list_controller.dart';
+import 'package:c_commerce/presentation/state_holders/popular_product_list_controller.dart';
+import 'package:c_commerce/presentation/state_holders/special_product_list_controller.dart';
 import 'package:c_commerce/presentation/utility/assets_path.dart';
 import 'package:c_commerce/presentation/widgets/app_bar_icon_action_button.dart';
 import 'package:c_commerce/presentation/widgets/category_item.dart';
+import 'package:c_commerce/presentation/widgets/centered_circular_progress_indicator.dart';
 import 'package:c_commerce/presentation/widgets/home_carousel_slider.dart';
 import 'package:c_commerce/presentation/widgets/product_card.dart';
 import 'package:c_commerce/presentation/widgets/section_header.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,31 +40,69 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               _buildSearchTextField(),
               const SizedBox(height: 16),
-              const HomeCarouselSlider(),
+              GetBuilder<HomeSliderController>(
+                builder: (sliderController) {
+                  if (sliderController.inProgress) {
+                    return const CenteredCircularProgressIndicator(height: 200);
+                  }
+                  return HomeCarouselSlider(
+                    sliderList: sliderController.sliderList,
+                  );
+                },
+              ),
               const SizedBox(height: 16),
               SectionHeader(
                 title: 'Category',
-                onTapSeeAll: () {},
+                onTapSeeAll: () {
+                  Get.find<MainBottomNavBarController>().selectCategory();
+                },
               ),
-              _buildCategoryListView(),
+              GetBuilder<CategoryListController>(
+                  builder: (categoryListController) {
+                if (categoryListController.inProgress) {
+                  return const CenteredCircularProgressIndicator(height: 120);
+                }
+                return _buildCategoryListView(
+                    categoryListController.categoryList);
+              }),
               const SizedBox(height: 8),
               SectionHeader(
                 title: 'Popular',
                 onTapSeeAll: () {},
               ),
-              _buildProductListView(),
+              GetBuilder<PopularProductListController>(
+                  builder: (popularProductController) {
+                log("Popular ${popularProductController.productList.length}");
+                if (popularProductController.inProgress) {
+                  return const CenteredCircularProgressIndicator(height: 120);
+                }
+                return _buildProductListView(
+                    popularProductController.productList);
+              }),
               const SizedBox(height: 8),
               SectionHeader(
                 title: 'Special',
                 onTapSeeAll: () {},
               ),
-              _buildProductListView(),
+              GetBuilder<SpecialProductListController>(
+                  builder: (spProductController) {
+                if (spProductController.inProgress) {
+                  return const CenteredCircularProgressIndicator(height: 120);
+                }
+                return _buildProductListView(spProductController.productList);
+              }),
               const SizedBox(height: 8),
               SectionHeader(
                 title: 'New',
                 onTapSeeAll: () {},
               ),
-              _buildProductListView(),
+              GetBuilder<NewProductListController>(
+                  builder: (newProductController) {
+                if (newProductController.inProgress) {
+                  return const CenteredCircularProgressIndicator(height: 120);
+                }
+                return _buildProductListView(newProductController.productList);
+              }),
             ],
           ),
         ),
@@ -63,14 +110,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildCategoryListView() {
+  Widget _buildCategoryListView(List<Category> categoryList) {
     return SizedBox(
       height: 120,
       child: ListView.separated(
-        itemCount: 5,
+        itemCount: categoryList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return const CategoryItem();
+          return CategoryItem(
+            category: categoryList[index],
+          );
         },
         separatorBuilder: (BuildContext context, int index) {
           return const SizedBox(width: 8 * 2);
@@ -79,14 +128,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildProductListView() {
+  Widget _buildProductListView(List<Product> productList) {
     return SizedBox(
       height: 210,
       child: ListView.separated(
-        itemCount: 5,
+        itemCount: productList.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return const ProductCard();
+          return FittedBox(
+            child: ProductCard(
+              product: productList[index],
+            ),
+          );
         },
         separatorBuilder: (BuildContext context, int index) {
           return const SizedBox(width: 8 * 2);

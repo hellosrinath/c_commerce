@@ -1,13 +1,15 @@
 import 'package:c_commerce/presentation/utility/app_colors.dart';
+import 'package:c_commerce/presentation/widgets/cache_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ProductImageCarouselSlider extends StatefulWidget {
   const ProductImageCarouselSlider({
     super.key,
+    required this.images,
   });
+
+  final List<String> images;
 
   @override
   State<ProductImageCarouselSlider> createState() =>
@@ -40,11 +42,11 @@ class _ProductImageCarouselSliderState
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for (int i = 0; i < 5; i++)
+              for (int i = 0; i < widget.images.length; i++)
                 Container(
                   width: 12,
                   height: 12,
-                  margin: const EdgeInsets.symmetric(horizontal: 2*2),
+                  margin: const EdgeInsets.symmetric(horizontal: 2 * 2),
                   decoration: BoxDecoration(
                     color:
                         i == currentPage ? AppColor.primaryColor : Colors.white,
@@ -70,17 +72,18 @@ class _ProductImageCarouselSliderState
           onPageChanged: (index, _) {
             _selectedSliderIndex.value = index;
           }),
-      items: [1, 2, 3, 4, 5].map((i) {
+      items: widget.images.map((image) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
-                width: MediaQuery.of(context).size.width,
-                color: Colors.grey.shade300,
-                alignment: Alignment.center,
-                child: Text(
-                  'text $i',
-                  style: const TextStyle(fontSize: 16.0),
-                ));
+              width: MediaQuery.of(context).size.width,
+              color: Colors.grey.shade300,
+              alignment: Alignment.center,
+              child: CacheNetworkImage(
+                url: image,
+                boxFit: BoxFit.cover,
+              ),
+            );
           },
         );
       }).toList(),

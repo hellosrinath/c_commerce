@@ -1,7 +1,10 @@
 import 'package:c_commerce/presentation/screens/complete_profile_screen.dart';
+import 'package:c_commerce/presentation/state_holders/verify_otp_controller.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/widgets/app_logo.dart';
+import 'package:c_commerce/presentation/widgets/show_message.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -42,12 +45,28 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 const SizedBox(height: 16),
                 _buildPinCodeTextField(),
                 const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.to(() => const CompleteProfileScreen());
-                  },
-                  child: const Text("Next"),
-                ),
+                GetBuilder<VerifyOtpController>(builder: (verifyOtpController) {
+                  if (verifyOtpController.inProgress) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return ElevatedButton(
+                    onPressed: () async {
+                      final result = await verifyOtpController.verifyOtp(
+                          widget.emailAddress, _otpTEController.text);
+                      if (result) {
+                        Get.to(() => const CompleteProfileScreen());
+                      } else {
+                        if (mounted) {
+                          showSnackBar(
+                              context, verifyOtpController.errorMessage);
+                        }
+                      }
+                    },
+                    child: const Text("Next"),
+                  );
+                }),
                 const SizedBox(height: 24),
                 _buildResendCodeText(),
                 TextButton(
@@ -84,6 +103,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 
   Widget _buildPinCodeTextField() {
+    //TODO: verify otp field
     return PinCodeTextField(
       length: 6,
       obscureText: false,
