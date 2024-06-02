@@ -1,3 +1,4 @@
+import 'package:c_commerce/presentation/state_holders/countdown_controller.dart';
 import 'package:c_commerce/presentation/state_holders/verify_email_controller.dart';
 import 'package:c_commerce/presentation/utility/constants.dart';
 import 'package:c_commerce/presentation/widgets/app_logo.dart';
@@ -18,6 +19,9 @@ class EmailVerificationScreen extends StatefulWidget {
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   final TextEditingController _emailTEController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  final CountdownController countdownController =
+  Get.find<CountdownController>();
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +85,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                                   emailAddress: _emailTEController.text,
                                 ),
                               );
+                              countdownController.reverseCountdown();
                             } else {
                               showSnackBar(
                                   context, verifyEmailController.errorMessage);

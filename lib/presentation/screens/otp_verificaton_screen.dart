@@ -4,6 +4,7 @@ import 'package:c_commerce/presentation/screens/complete_profile_screen.dart';
 import 'package:c_commerce/presentation/screens/main_bottom_navbar_screen.dart';
 import 'package:c_commerce/presentation/state_holders/countdown_controller.dart';
 import 'package:c_commerce/presentation/state_holders/read_profile_controller.dart';
+import 'package:c_commerce/presentation/state_holders/verify_email_controller.dart';
 import 'package:c_commerce/presentation/state_holders/verify_otp_controller.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/widgets/app_logo.dart';
@@ -25,15 +26,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final TextEditingController _otpTEController = TextEditingController();
   final ReadProfileController readProfileController =
       Get.find<ReadProfileController>();
-
-  final CountdownController countdownController =
-      Get.find<CountdownController>();
-
-  @override
-  void initState() {
-    super.initState();
-    countdownController.reverseCountdown();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +74,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           Get.to(() => const MainBottomNavBarScreen());
                         }
                       } else {
-                        countdownController.reverseCountdown();
                         if (mounted) {
                           showSnackBar(
                               context, verifyOtpController.errorMessage);
@@ -93,19 +84,46 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   );
                 }),
                 const SizedBox(height: 24),
-                GetBuilder<CountdownController>(builder: (countDownController) {
-                  return _buildResendCodeText(countDownController.maxTime);
-                }),
-                GetBuilder<CountdownController>(builder: (countDownController) {
-                  return TextButton(
-                    onPressed: () {
-                      if (countDownController.maxTime > 0) {
-                        showSnackBar(context, 'Please wait');
-                      }
-                    },
-                    child: const Text("Resend Code"),
-                  );
-                })
+                GetBuilder<CountdownController>(
+                  builder: (countDownController) {
+                    return _buildResendCodeText(countDownController.maxTime);
+                  },
+                ),
+                GetBuilder<CountdownController>(
+                  builder: (countDownController) {
+                    return TextButton(
+                      onPressed: () {
+                        if (countDownController.maxTime > 0) {
+                          showSnackBar(context, 'Please wait');
+                        } else {
+                          VerifyEmailController verificationEmailController =
+                              Get.find<VerifyEmailController>();
+
+                          verificationEmailController
+                              .verifyEmail(widget.emailAddress)
+                              .then((success) {
+                            if (success) {
+                              showSnackBar(context, 'A 6 Digit OTP has been send to your email address');
+                              Get.find<CountdownController>()
+                                  .reverseCountdown();
+                            } else {
+                              showSnackBar(context,
+                                  verificationEmailController.errorMessage);
+                            }
+                          });
+                        }
+                      },
+                      child: Text(
+                        "Resend Code",
+                        style: TextStyle(
+                          color: countDownController.maxTime > 0
+                              ? Colors.grey
+                              : null,
+                        ),
+                      ),
+                    );
+                  },
+                )
               ],
             ),
           ),
@@ -126,13 +144,19 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               text: 'This code will expire in ',
             ),
             TextSpan(
-              text: '$count s',
+              text: '${formatDuration(count)} s',
               style: const TextStyle(
                 color: AppColor.primaryColor,
               ),
             )
           ]),
     );
+  }
+
+  String formatDuration(int seconds) {
+    int minutes = seconds ~/ 60;
+    int remainingSeconds = seconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
   }
 
   Widget _buildPinCodeTextField() {

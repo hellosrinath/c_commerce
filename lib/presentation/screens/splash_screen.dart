@@ -27,8 +27,8 @@ class _SplashScreenState extends State<SplashScreen> {
     log('tkn: ${UserAuthController.accessToken}');
     // UserAuthController.clearUserData();
     await Future.delayed(const Duration(seconds: 2));
-    // Get.off(() => const MainBottomNavBarScreen());
-    Get.off(() => const OtpVerificationScreen(emailAddress: ""));
+    Get.off(() => const MainBottomNavBarScreen());
+    // Get.off(() => const OtpVerificationScreen(emailAddress: ""));
   }
 
   @override
