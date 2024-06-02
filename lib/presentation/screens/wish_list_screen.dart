@@ -1,5 +1,4 @@
 import 'package:c_commerce/presentation/state_holders/main_bottom_nav_bar_controller.dart';
-import 'package:c_commerce/presentation/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

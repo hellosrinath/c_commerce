@@ -1,7 +1,6 @@
 import 'package:c_commerce/data/models/product.dart';
 import 'package:c_commerce/presentation/screens/product_details_screen.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
-import 'package:c_commerce/presentation/utility/assets_path.dart';
 import 'package:c_commerce/presentation/widgets/cache_network_image.dart';
 import 'package:c_commerce/presentation/widgets/wish_button.dart';
 import 'package:flutter/material.dart';

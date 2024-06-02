@@ -1,5 +1,13 @@
+import 'dart:developer';
+
+import 'package:c_commerce/data/models/create_profile_model.dart';
+import 'package:c_commerce/presentation/state_holders/create_profile_controller.dart';
 import 'package:c_commerce/presentation/widgets/app_logo.dart';
+import 'package:c_commerce/presentation/widgets/show_message.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'main_bottom_navbar_screen.dart';
 
 class CompleteProfileScreen extends StatefulWidget {
   const CompleteProfileScreen({super.key});
@@ -40,10 +48,40 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 ),
                 const SizedBox(height: 16),
                 _buildCompleteProfileForm(),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Complete"),
-                )
+                GetBuilder<CreateProfileController>(
+                    builder: (createProfileController) {
+                  if (createProfileController.inProgress) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return ElevatedButton(
+                    onPressed: () {
+                      if (_globalKey.currentState!.validate()) {
+                        final createProfileModel = CreateProfileModel(
+                          cusName:
+                              '${_firstNameTEController.text.trim()} ${_lastNameTEController.text.trim()}',
+                          cusCity: _cityTEController.text.trim(),
+                          cusPhone: _mobileTEController.text.trim(),
+                          shipAdd: _shippingAddressTEController.text.trim(),
+                        );
+
+                        log('createProfile: ${createProfileModel.toJson()}');
+
+                        createProfileController
+                            .createProfile(createProfileModel);
+
+                        if (createProfileController.isSuccess) {
+                          Get.off(() => const MainBottomNavBarScreen());
+                        } else {
+                          showSnackBar(
+                              context, createProfileController.errorMessage);
+                        }
+                      }
+                    },
+                    child: const Text("Complete"),
+                  );
+                })
               ],
             ),
           ),
@@ -57,40 +95,72 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       key: _globalKey,
       child: Column(
         children: [
-          TextField(
+          TextFormField(
             controller: _firstNameTEController,
             decoration: const InputDecoration(
               hintText: 'First Name',
             ),
+            validator: (String? fName) {
+              if (fName?.isEmpty ?? true) {
+                return 'Enter First Name';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 8),
-          TextField(
+          TextFormField(
             controller: _lastNameTEController,
             decoration: const InputDecoration(
               hintText: 'Last Name',
             ),
+            validator: (String? lName) {
+              if (lName?.isEmpty ?? true) {
+                return 'Enter Last Name';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 8),
-          TextField(
+          TextFormField(
+            maxLength: 11,
+            keyboardType: TextInputType.phone,
             controller: _mobileTEController,
             decoration: const InputDecoration(
               hintText: 'Mobile',
             ),
+            validator: (String? mobile) {
+              if (mobile?.isEmpty ?? true) {
+                return 'Enter Contact Number';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 8),
-          TextField(
+          TextFormField(
             controller: _cityTEController,
             decoration: const InputDecoration(
               hintText: 'City',
             ),
+            validator: (String? city) {
+              if (city?.isEmpty ?? true) {
+                return 'Enter City';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 8),
-          TextField(
+          TextFormField(
             maxLines: 3,
             controller: _shippingAddressTEController,
             decoration: const InputDecoration(
               hintText: 'Shipping Address',
             ),
+            validator: (String? address) {
+              if (address?.isEmpty ?? true) {
+                return 'Enter Shipping Address';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 16),
         ],

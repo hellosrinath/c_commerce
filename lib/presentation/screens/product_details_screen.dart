@@ -1,10 +1,11 @@
 import 'package:c_commerce/data/models/cart_model.dart';
 import 'package:c_commerce/data/models/product_details_model.dart';
+import 'package:c_commerce/presentation/screens/complete_profile_screen.dart';
 import 'package:c_commerce/presentation/state_holders/add_to_cart_controller.dart';
 import 'package:c_commerce/presentation/state_holders/product_details_controller.dart';
+import 'package:c_commerce/presentation/state_holders/read_profile_controller.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/widgets/centered_circular_progress_indicator.dart';
-import 'package:c_commerce/presentation/widgets/color_picker.dart';
 import 'package:c_commerce/presentation/widgets/product_image_carousel_slider.dart';
 import 'package:c_commerce/presentation/widgets/size_picker.dart';
 import 'package:c_commerce/presentation/widgets/wish_button.dart';

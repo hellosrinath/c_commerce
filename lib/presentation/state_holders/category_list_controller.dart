@@ -1,8 +1,6 @@
 import 'package:c_commerce/data/models/category.dart';
 import 'package:c_commerce/data/models/category_list_model.dart';
 import 'package:c_commerce/data/models/network_response.dart';
-import 'package:c_commerce/data/models/slider_data.dart';
-import 'package:c_commerce/data/models/slider_list_model.dart';
 import 'package:c_commerce/data/network_caller/network_caller.dart';
 import 'package:c_commerce/data/utilities/urls.dart';
 import 'package:get/get.dart';

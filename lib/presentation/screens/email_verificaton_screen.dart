@@ -4,7 +4,6 @@ import 'package:c_commerce/presentation/widgets/app_logo.dart';
 import 'package:c_commerce/presentation/widgets/show_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 
 import 'otp_verificaton_screen.dart';
 

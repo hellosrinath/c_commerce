@@ -4,15 +4,23 @@ import 'dart:developer';
 import 'package:c_commerce/app.dart';
 import 'package:c_commerce/data/models/network_response.dart';
 import 'package:c_commerce/presentation/screens/email_verificaton_screen.dart';
+import 'package:c_commerce/presentation/state_holders/user_auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
 class NetworkCaller {
-  static Future<NetworkResponse> getRequest({required String url}) async {
+  static Future<NetworkResponse> getRequest(
+      {required String url, bool fromAuth = false}) async {
     try {
       log(url);
-
-      final Response response = await get(Uri.parse(url));
+      log('Token: ${UserAuthController.accessToken}');
+      final Response response = await get(
+        Uri.parse(url),
+        headers: {
+          'accept': 'application/json',
+          'token': UserAuthController.accessToken
+        },
+      );
 
       log(response.statusCode.toString());
       log(response.body.toString());
@@ -25,7 +33,7 @@ class NetworkCaller {
           responseData: decodedData,
         );
       } else if (response.statusCode == 401) {
-        _goToSignInScreen();
+        if (!fromAuth) _goToSignInScreen();
         return NetworkResponse(
           responseCode: response.statusCode,
           isSuccess: false,
@@ -51,11 +59,13 @@ class NetworkCaller {
   }) async {
     try {
       log(url);
+      log('Token: ${UserAuthController.accessToken}');
       final Response response = await post(
         Uri.parse(url),
         body: jsonEncode(body),
         headers: {
           'accept': 'application/json',
+          'token': UserAuthController.accessToken
         },
       );
 

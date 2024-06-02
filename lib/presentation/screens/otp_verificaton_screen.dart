@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:c_commerce/presentation/screens/complete_profile_screen.dart';
+import 'package:c_commerce/presentation/screens/main_bottom_navbar_screen.dart';
+import 'package:c_commerce/presentation/state_holders/countdown_controller.dart';
+import 'package:c_commerce/presentation/state_holders/read_profile_controller.dart';
 import 'package:c_commerce/presentation/state_holders/verify_otp_controller.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/widgets/app_logo.dart';
 import 'package:c_commerce/presentation/widgets/show_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -19,6 +23,17 @@ class OtpVerificationScreen extends StatefulWidget {
 
 class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   final TextEditingController _otpTEController = TextEditingController();
+  final ReadProfileController readProfileController =
+      Get.find<ReadProfileController>();
+
+  final CountdownController countdownController =
+      Get.find<CountdownController>();
+
+  @override
+  void initState() {
+    super.initState();
+    countdownController.reverseCountdown();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +71,18 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       final result = await verifyOtpController.verifyOtp(
                           widget.emailAddress, _otpTEController.text);
                       if (result) {
-                        Get.to(() => const CompleteProfileScreen());
+                        await readProfileController.readProfile();
+                        final userData = readProfileController.userData;
+                        log('userData: $userData');
+                        // checking user profile data. if data is null then go
+                        // complete profile screen, otherwise home screen
+                        if (userData == null) {
+                          Get.to(() => const CompleteProfileScreen());
+                        } else {
+                          Get.to(() => const MainBottomNavBarScreen());
+                        }
                       } else {
+                        countdownController.reverseCountdown();
                         if (mounted) {
                           showSnackBar(
                               context, verifyOtpController.errorMessage);
@@ -68,11 +93,19 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                   );
                 }),
                 const SizedBox(height: 24),
-                _buildResendCodeText(),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text("Resend Code"),
-                )
+                GetBuilder<CountdownController>(builder: (countDownController) {
+                  return _buildResendCodeText(countDownController.maxTime);
+                }),
+                GetBuilder<CountdownController>(builder: (countDownController) {
+                  return TextButton(
+                    onPressed: () {
+                      if (countDownController.maxTime > 0) {
+                        showSnackBar(context, 'Please wait');
+                      }
+                    },
+                    child: const Text("Resend Code"),
+                  );
+                })
               ],
             ),
           ),
@@ -81,20 +114,20 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
   }
 
-  Widget _buildResendCodeText() {
+  Widget _buildResendCodeText(int count) {
     return RichText(
-      text: const TextSpan(
-          style: TextStyle(
+      text: TextSpan(
+          style: const TextStyle(
             color: Colors.grey,
             fontWeight: FontWeight.w500,
           ),
           children: [
-            TextSpan(
+            const TextSpan(
               text: 'This code will expire in ',
             ),
             TextSpan(
-              text: '120s',
-              style: TextStyle(
+              text: '$count s',
+              style: const TextStyle(
                 color: AppColor.primaryColor,
               ),
             )

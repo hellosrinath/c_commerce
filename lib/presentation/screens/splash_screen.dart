@@ -1,4 +1,9 @@
+import 'dart:developer';
+
+import 'package:c_commerce/presentation/screens/complete_profile_screen.dart';
 import 'package:c_commerce/presentation/screens/main_bottom_navbar_screen.dart';
+import 'package:c_commerce/presentation/screens/otp_verificaton_screen.dart';
+import 'package:c_commerce/presentation/state_holders/user_auth_controller.dart';
 import 'package:c_commerce/presentation/widgets/app_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -18,8 +23,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _moveToHomeScreen() async {
+    await UserAuthController.getUserToken();
+    log('tkn: ${UserAuthController.accessToken}');
+    // UserAuthController.clearUserData();
     await Future.delayed(const Duration(seconds: 2));
-    Get.off(() => const MainBottomNavBarScreen());
+    // Get.off(() => const MainBottomNavBarScreen());
+    Get.off(() => const OtpVerificationScreen(emailAddress: ""));
   }
 
   @override

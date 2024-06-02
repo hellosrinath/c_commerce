@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:c_commerce/presentation/screens/cart_list_screen.dart';
 import 'package:c_commerce/presentation/screens/category_list_screen.dart';
 import 'package:c_commerce/presentation/screens/home_screen.dart';
@@ -7,6 +9,7 @@ import 'package:c_commerce/presentation/state_holders/home_slider_controller.dar
 import 'package:c_commerce/presentation/state_holders/main_bottom_nav_bar_controller.dart';
 import 'package:c_commerce/presentation/state_holders/new_product_list_controller.dart';
 import 'package:c_commerce/presentation/state_holders/popular_product_list_controller.dart';
+import 'package:c_commerce/presentation/state_holders/read_profile_controller.dart';
 import 'package:c_commerce/presentation/state_holders/special_product_list_controller.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +42,8 @@ class _MainBottomNavBarScreenState extends State<MainBottomNavBarScreen> {
     Get.find<NewProductListController>().getNewProductList();
     Get.find<SpecialProductListController>().getSpecialProductList();
   }
+
+
 
   @override
   Widget build(BuildContext context) {

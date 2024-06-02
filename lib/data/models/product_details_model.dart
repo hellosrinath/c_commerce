@@ -1,5 +1,3 @@
-import 'package:c_commerce/data/models/brand.dart';
-import 'package:c_commerce/data/models/category.dart';
 import 'package:c_commerce/data/models/product.dart';
 
 class ProductDetailsModel {
