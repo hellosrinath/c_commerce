@@ -1,17 +1,27 @@
+import 'package:c_commerce/data/models/cart_item_model.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/utility/assets_path.dart';
+import 'package:c_commerce/presentation/widgets/cache_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:item_count_number_button/item_count_number_button.dart';
 
 class CartProductItem extends StatefulWidget {
-  const CartProductItem({super.key});
+  const CartProductItem({super.key, required this.cartItem});
+
+  final CartItemModel cartItem;
 
   @override
   State<CartProductItem> createState() => _CartProductItemState();
 }
 
 class _CartProductItemState extends State<CartProductItem> {
-  int _counterValue = 1;
+  late int _counterValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _counterValue = widget.cartItem.qty!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +33,9 @@ class _CartProductItemState extends State<CartProductItem> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.asset(
-              AssetsPath.productDummy,
+            child: CacheNetworkImage(
+              url: widget.cartItem.product?.image ?? '',
+              height: 100,
               width: 100,
             ),
           ),
@@ -35,13 +46,13 @@ class _CartProductItemState extends State<CartProductItem> {
                 children: [
                   Row(
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Nike shoes 34LK',
-                              style: TextStyle(
+                              widget.cartItem.product?.title ?? '',
+                              style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600,
@@ -53,14 +64,14 @@ class _CartProductItemState extends State<CartProductItem> {
                               spacing: 16,
                               children: [
                                 Text(
-                                  'Color: RED',
-                                  style: TextStyle(
+                                  'Color: ${widget.cartItem.color}',
+                                  style: const TextStyle(
                                     color: Colors.black54,
                                   ),
                                 ),
                                 Text(
-                                  'Size: XL',
-                                  style: TextStyle(
+                                  'Size: ${widget.cartItem.size}',
+                                  style: const TextStyle(
                                     color: Colors.black54,
                                   ),
                                 ),
@@ -78,9 +89,9 @@ class _CartProductItemState extends State<CartProductItem> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        '\$2000',
-                        style: TextStyle(
+                      Text(
+                        '\$${widget.cartItem.product?.price ?? 0}',
+                        style: const TextStyle(
                           color: AppColor.primaryColor,
                           fontSize: 16,
                           fontWeight: FontWeight.w600,

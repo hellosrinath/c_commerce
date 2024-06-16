@@ -25,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _moveToHomeScreen() async {
     await UserAuthController.getUserToken();
     log('tkn: ${UserAuthController.accessToken}');
-    // UserAuthController.clearUserData();
     await Future.delayed(const Duration(seconds: 2));
     Get.off(() => const MainBottomNavBarScreen());
     // Get.off(() => const OtpVerificationScreen(emailAddress: ""));

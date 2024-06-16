@@ -1,5 +1,6 @@
 import 'package:c_commerce/presentation/state_holders/add_to_cart_controller.dart';
 import 'package:c_commerce/presentation/state_holders/add_to_wish_list_controller.dart';
+import 'package:c_commerce/presentation/state_holders/cart_list_controller.dart';
 import 'package:c_commerce/presentation/state_holders/category_list_controller.dart';
 import 'package:c_commerce/presentation/state_holders/countdown_controller.dart';
 import 'package:c_commerce/presentation/state_holders/create_profile_controller.dart';
@@ -35,5 +36,6 @@ class ControllerBinder extends Bindings {
     Get.put(CountdownController());
     Get.put(AddToWishListController());
     Get.put(WishListController());
+    Get.put(CartListController());
   }
 }

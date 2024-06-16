@@ -1,6 +1,8 @@
+import 'package:c_commerce/presentation/state_holders/cart_list_controller.dart';
 import 'package:c_commerce/presentation/state_holders/main_bottom_nav_bar_controller.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/widgets/cart_product_item.dart';
+import 'package:c_commerce/presentation/widgets/centered_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +14,11 @@ class CartListScreen extends StatefulWidget {
 }
 
 class _CartListScreenState extends State<CartListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Get.find<CartListController>().getCartList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,24 +37,31 @@ class _CartListScreenState extends State<CartListScreen> {
             icon: const Icon(Icons.arrow_back_ios_new_outlined),
           ),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: 15,
-                itemBuilder: (context, index) {
-                  return const CartProductItem();
-                },
+        body: GetBuilder<CartListController>(builder: (cartListController) {
+          if (cartListController.inProgress) {
+            return const CenteredCircularProgressIndicator(height: 400);
+          }
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: cartListController.cartList.length,
+                  itemBuilder: (context, index) {
+                    return CartProductItem(
+                      cartItem: cartListController.cartList[index],
+                    );
+                  },
+                ),
               ),
-            ),
-            _buildAddToCartSection()
-          ],
-        ),
+              _buildAddToCartSection(cartListController.totalPrice)
+            ],
+          );
+        }),
       ),
     );
   }
 
-  Widget _buildAddToCartSection() {
+  Widget _buildAddToCartSection(double totalPrice) {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -59,10 +73,10 @@ class _CartListScreenState extends State<CartListScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Column(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Total Price',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -70,8 +84,8 @@ class _CartListScreenState extends State<CartListScreen> {
                 ),
               ),
               Text(
-                '\$12000',
-                style: TextStyle(
+                '\$$totalPrice',
+                style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                   color: AppColor.primaryColor,
