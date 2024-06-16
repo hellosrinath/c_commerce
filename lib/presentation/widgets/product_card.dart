@@ -103,7 +103,9 @@ class ProductCard extends StatelessWidget {
             Text('${product.star}'),
           ],
         ),
-        const WishButton()
+        WishButton(
+          onTap: () {},
+        )
       ],
     );
   }

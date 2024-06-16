@@ -2,6 +2,7 @@ import 'package:c_commerce/data/models/cart_model.dart';
 import 'package:c_commerce/data/models/product_details_model.dart';
 import 'package:c_commerce/presentation/screens/complete_profile_screen.dart';
 import 'package:c_commerce/presentation/state_holders/add_to_cart_controller.dart';
+import 'package:c_commerce/presentation/state_holders/add_to_wish_list_controller.dart';
 import 'package:c_commerce/presentation/state_holders/product_details_controller.dart';
 import 'package:c_commerce/presentation/state_holders/read_profile_controller.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
@@ -243,7 +244,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ],
         ),
         TextButton(onPressed: () {}, child: const Text("Reviews")),
-        const WishButton(showAddToWishList: true),
+        GetBuilder<AddToWishListController>(builder: (addToWishListController) {
+          if (addToWishListController.inProgress) {
+            return Transform.scale(
+              scale: 0.4,
+              child: const CircularProgressIndicator(),
+            );
+          }
+          return WishButton(
+            showAddToWishList: true,
+            onTap: () {
+              addToWishListController.createWishList(widget.productId);
+            },
+          );
+        }),
       ],
     );
   }

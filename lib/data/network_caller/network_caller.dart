@@ -101,6 +101,7 @@ class NetworkCaller {
   }
 
   static void _goToSignInScreen() {
+    UserAuthController.clearUserData();
     Navigator.push(
       CraftyBay.navigatorKey.currentState!.context,
       MaterialPageRoute(
