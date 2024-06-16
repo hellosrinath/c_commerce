@@ -13,6 +13,7 @@ import 'package:c_commerce/presentation/state_holders/read_profile_controller.da
 import 'package:c_commerce/presentation/state_holders/special_product_list_controller.dart';
 import 'package:c_commerce/presentation/state_holders/verify_email_controller.dart';
 import 'package:c_commerce/presentation/state_holders/verify_otp_controller.dart';
+import 'package:c_commerce/presentation/state_holders/wish_list_controller.dart';
 import 'package:get/get.dart';
 
 class ControllerBinder extends Bindings {
@@ -33,5 +34,6 @@ class ControllerBinder extends Bindings {
     Get.put(CreateProfileController());
     Get.put(CountdownController());
     Get.put(AddToWishListController());
+    Get.put(WishListController());
   }
 }
