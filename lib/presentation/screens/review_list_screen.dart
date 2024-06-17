@@ -74,7 +74,7 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
-                    Icons.person_2_outlined,
+                    Icons.person_3_outlined,
                     color: Colors.black26,
                   ),
                 ),
