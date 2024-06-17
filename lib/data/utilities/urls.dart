@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Urls {
   static const String _baseUrl = 'http://ecom-api.teamrabbil.com/api';
   static const String homeSlider = '$_baseUrl/ListProductSlider';
@@ -26,4 +24,7 @@ class Urls {
 
   static String verifyOtp(String email, String otp) =>
       '$_baseUrl/VerifyLogin/$email/$otp';
+
+  static String getReviewListByProduct(int productId) =>
+      '$_baseUrl/ListReviewByProduct/$productId';
 }
