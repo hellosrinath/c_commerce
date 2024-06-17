@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:c_commerce/data/models/cart_item_model.dart';
 import 'package:c_commerce/data/models/cart_list_model.dart';
 import 'package:c_commerce/data/models/network_response.dart';
@@ -51,8 +53,34 @@ class CartListController extends GetxController {
     return total;
   }
 
-  void changeProductQuantity(int catId, int quantity) {
-    _cartList.firstWhere((c) => c.id == catId).qty = quantity;
+  void changeProductQuantity(int cartId, int quantity) {
+    _cartList.firstWhere((c) => c.id == cartId).qty = quantity;
+
     update();
+  }
+
+  void _deleteCartItem(int cartId) {
+    _cartList.removeWhere((c) => c.id == cartId);
+  }
+
+  Future<bool> deleteCartItem(int cartId) async {
+    bool isSuccess = false;
+    _inProgress = true;
+    update();
+
+    final NetworkResponse response = await NetworkCaller.getRequest(
+      url: Urls.getCartList, // TODO: change url
+    );
+
+    if (response.isSuccess) {
+      _deleteCartItem(cartId);
+      isSuccess = true;
+    } else {
+      _errorMessage = response.errorMessage;
+    }
+
+    _inProgress = false;
+    update();
+    return isSuccess;
   }
 }

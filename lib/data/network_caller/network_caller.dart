@@ -100,7 +100,8 @@ class NetworkCaller {
     }
   }
 
-  static void _goToSignInScreen() {
+  static void _goToSignInScreen() async {
+    await UserAuthController.clearUserData();
     Navigator.push(
       CraftyBay.navigatorKey.currentState!.context,
       MaterialPageRoute(
