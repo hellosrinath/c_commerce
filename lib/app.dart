@@ -19,7 +19,6 @@ class _CraftyBayState extends State<CraftyBay> {
     return GetMaterialApp(
       navigatorKey: CraftyBay.navigatorKey,
       initialBinding: ControllerBinder(),
-      debugShowCheckedModeBanner: false,
       home: const SplashScreen(),
       theme: _buildThemeData(),
     );
