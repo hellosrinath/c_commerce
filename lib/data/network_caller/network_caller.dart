@@ -59,6 +59,7 @@ class NetworkCaller {
   }) async {
     try {
       log(url);
+      log(body.toString());
       log('Token: ${UserAuthController.accessToken}');
       final Response response = await post(
         Uri.parse(url),

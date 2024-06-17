@@ -16,6 +16,7 @@ import 'package:c_commerce/presentation/state_holders/special_product_list_contr
 import 'package:c_commerce/presentation/state_holders/verify_email_controller.dart';
 import 'package:c_commerce/presentation/state_holders/verify_otp_controller.dart';
 import 'package:c_commerce/presentation/state_holders/wish_list_controller.dart';
+import 'package:c_commerce/presentation/state_holders/write_review_controller.dart';
 import 'package:get/get.dart';
 
 class ControllerBinder extends Bindings {
@@ -39,5 +40,6 @@ class ControllerBinder extends Bindings {
     Get.put(WishListController());
     Get.put(CartListController());
     Get.put(ReviewListController());
+    Get.put(WriteReviewController());
   }
 }

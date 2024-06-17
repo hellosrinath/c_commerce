@@ -1,3 +1,4 @@
+import 'package:c_commerce/presentation/screens/write_review_screen.dart';
 import 'package:c_commerce/presentation/state_holders/review_list_controller.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
 import 'package:c_commerce/presentation/widgets/centered_circular_progress_indicator.dart';
@@ -124,7 +125,11 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
           FloatingActionButton(
             elevation: 4,
             backgroundColor: AppColor.primaryColor,
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => WriteReviewScreen(
+                    productId: widget.productId,
+                  ));
+            },
             shape: const CircleBorder(),
             child: const Icon(
               Icons.add,
