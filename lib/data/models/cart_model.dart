@@ -22,8 +22,8 @@ class CartModel {
 
 /*
 {
-"product_id":1,
-"color":"Red",
-"size":"X",
-"qty":5
+    "product_id":4,
+    "color":"Red",
+    "size":"X",
+    "qty":5
 }*/

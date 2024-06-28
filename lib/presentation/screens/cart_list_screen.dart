@@ -37,26 +37,28 @@ class _CartListScreenState extends State<CartListScreen> {
             icon: const Icon(Icons.arrow_back_ios_new_outlined),
           ),
         ),
-        body: GetBuilder<CartListController>(builder: (cartListController) {
-          if (cartListController.inProgress) {
-            return const CenteredCircularProgressIndicator(height: 400);
-          }
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: cartListController.cartList.length,
-                  itemBuilder: (context, index) {
-                    return CartProductItem(
-                      cartItem: cartListController.cartList[index],
-                    );
-                  },
+        body: GetBuilder<CartListController>(
+          builder: (cartListController) {
+            if (cartListController.inProgress) {
+              return const CenteredCircularProgressIndicator(height: 400);
+            }
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: cartListController.cartList.length,
+                    itemBuilder: (context, index) {
+                      return CartProductItem(
+                        cartItem: cartListController.cartList[index],
+                      );
+                    },
+                  ),
                 ),
-              ),
-              _buildAddToCartSection(cartListController.totalPrice)
-            ],
-          );
-        }),
+                _buildAddToCartSection(cartListController.totalPrice)
+              ],
+            );
+          },
+        ),
       ),
     );
   }

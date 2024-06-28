@@ -9,6 +9,9 @@ class Urls {
   static const String getProductWishList = '$_baseUrl/ProductWishList';
   static const String getCartList = '$_baseUrl/CartList';
 
+  static String deleteCartList(int cartId) =>
+      '$_baseUrl/DeleteCartList/$cartId';
+
   static String productListByCategory(int categoryId) =>
       '$_baseUrl/ListProductByCategory/$categoryId';
 

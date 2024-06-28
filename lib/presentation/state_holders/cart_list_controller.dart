@@ -1,12 +1,6 @@
-import 'dart:developer';
-
 import 'package:c_commerce/data/models/cart_item_model.dart';
 import 'package:c_commerce/data/models/cart_list_model.dart';
 import 'package:c_commerce/data/models/network_response.dart';
-import 'package:c_commerce/data/models/product.dart';
-import 'package:c_commerce/data/models/product_list_model.dart';
-import 'package:c_commerce/data/models/wish_list_item.dart';
-import 'package:c_commerce/data/models/wish_list_model.dart';
 import 'package:c_commerce/data/network_caller/network_caller.dart';
 import 'package:c_commerce/data/utilities/urls.dart';
 import 'package:get/get.dart';
@@ -54,13 +48,13 @@ class CartListController extends GetxController {
   }
 
   void changeProductQuantity(int cartId, int quantity) {
-    _cartList.firstWhere((c) => c.id == cartId).qty = quantity;
-
+    _cartList.firstWhere((c) => c.productId == cartId).qty = quantity;
     update();
   }
 
   void _deleteCartItem(int cartId) {
-    _cartList.removeWhere((c) => c.id == cartId);
+    _cartList.removeWhere((c) => c.productId == cartId);
+    update();
   }
 
   Future<bool> deleteCartItem(int cartId) async {
@@ -69,7 +63,7 @@ class CartListController extends GetxController {
     update();
 
     final NetworkResponse response = await NetworkCaller.getRequest(
-      url: Urls.getCartList, // TODO: change url
+      url: Urls.deleteCartList(cartId),
     );
 
     if (response.isSuccess) {

@@ -2,6 +2,9 @@ import 'dart:developer';
 
 import 'package:c_commerce/data/models/category.dart';
 import 'package:c_commerce/data/models/product.dart';
+import 'package:c_commerce/presentation/screens/new_product_list_screen.dart';
+import 'package:c_commerce/presentation/screens/popular_product_list_screen.dart';
+import 'package:c_commerce/presentation/screens/special_product_list_screen.dart';
 import 'package:c_commerce/presentation/state_holders/category_list_controller.dart';
 import 'package:c_commerce/presentation/state_holders/home_slider_controller.dart';
 import 'package:c_commerce/presentation/state_holders/main_bottom_nav_bar_controller.dart';
@@ -68,7 +71,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 8),
               SectionHeader(
                 title: 'Popular',
-                onTapSeeAll: () {},
+                onTapSeeAll: () {
+                  Get.to(() => const PopularProductListScreen());
+                },
               ),
               GetBuilder<PopularProductListController>(
                   builder: (popularProductController) {
@@ -82,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 8),
               SectionHeader(
                 title: 'Special',
-                onTapSeeAll: () {},
+                onTapSeeAll: () {
+                  Get.to(() => const SpecialProductListScreen());
+                },
               ),
               GetBuilder<SpecialProductListController>(
                   builder: (spProductController) {
@@ -94,7 +101,9 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 8),
               SectionHeader(
                 title: 'New',
-                onTapSeeAll: () {},
+                onTapSeeAll: () {
+                  Get.to(() => const NewProductListScreen());
+                },
               ),
               GetBuilder<NewProductListController>(
                   builder: (newProductController) {

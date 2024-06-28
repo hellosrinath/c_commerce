@@ -258,20 +258,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           },
           child: const Text("Reviews"),
         ),
-        GetBuilder<AddToWishListController>(builder: (addToWishListController) {
-          if (addToWishListController.inProgress) {
-            return Transform.scale(
-              scale: 0.4,
-              child: const CircularProgressIndicator(),
+        GetBuilder<AddToWishListController>(
+          builder: (addToWishListController) {
+            if (addToWishListController.inProgress) {
+              return Transform.scale(
+                scale: 0.4,
+                child: const CircularProgressIndicator(),
+              );
+            }
+            return WishButton(
+              showAddToWishList: true,
+              onTap: () {
+                addToWishListController.createWishList(widget.productId);
+              },
             );
-          }
-          return WishButton(
-            showAddToWishList: true,
-            onTap: () {
-              addToWishListController.createWishList(widget.productId);
-            },
-          );
-        }),
+          },
+        ),
       ],
     );
   }
