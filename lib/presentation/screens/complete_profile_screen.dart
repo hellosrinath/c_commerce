@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:c_commerce/data/models/create_profile_model.dart';
 import 'package:c_commerce/presentation/state_holders/create_profile_controller.dart';
 import 'package:c_commerce/presentation/widgets/app_logo.dart';
+import 'package:c_commerce/presentation/widgets/custom_text_form_field.dart';
 import 'package:c_commerce/presentation/widgets/show_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,10 +20,29 @@ class CompleteProfileScreen extends StatefulWidget {
 class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   final TextEditingController _firstNameTEController = TextEditingController();
   final TextEditingController _lastNameTEController = TextEditingController();
+  final TextEditingController _cusAddressTEController = TextEditingController();
   final TextEditingController _mobileTEController = TextEditingController();
   final TextEditingController _cityTEController = TextEditingController();
+  final TextEditingController _stateTEController = TextEditingController();
+  final TextEditingController _postCodeTEController = TextEditingController();
+  final TextEditingController _countryTEController = TextEditingController();
   final TextEditingController _shippingAddressTEController =
       TextEditingController();
+  final TextEditingController _shippingNameTEController =
+      TextEditingController();
+
+  final TextEditingController _shippingCityTEController =
+      TextEditingController();
+  final TextEditingController _shippingStateTEController =
+      TextEditingController();
+  final TextEditingController _shippingPostCodeTEController =
+      TextEditingController();
+  final TextEditingController _shippingCountryTEController =
+      TextEditingController();
+  final TextEditingController _shippingPhoneTEController =
+      TextEditingController();
+  final TextEditingController _cusFaxTEController = TextEditingController();
+
   final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
 
   @override
@@ -64,6 +84,18 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           cusCity: _cityTEController.text.trim(),
                           cusPhone: _mobileTEController.text.trim(),
                           shipAdd: _shippingAddressTEController.text.trim(),
+                          cusAdd: _cusAddressTEController.text.trim(),
+                          cusState: _stateTEController.text.trim(),
+                          cusPostcode: _postCodeTEController.text.trim(),
+                          cusCountry: _countryTEController.text.trim(),
+                          cusFax: _cusFaxTEController.text.trim(),
+                          shipName: _shippingNameTEController.text.trim(),
+                          shipCity: _shippingCityTEController.text.trim(),
+                          shipState: _shippingStateTEController.text.trim(),
+                          shipPostcode:
+                              _shippingPostCodeTEController.text.trim(),
+                          shipCountry: _shippingCountryTEController.text.trim(),
+                          shipPhone: _shippingPhoneTEController.text.trim(),
                         );
 
                         log('createProfile: ${createProfileModel.toJson()}');
@@ -95,72 +127,73 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       key: _globalKey,
       child: Column(
         children: [
-          TextFormField(
+          CustomTextFormField(
             controller: _firstNameTEController,
-            decoration: const InputDecoration(
-              hintText: 'First Name',
-            ),
-            validator: (String? fName) {
-              if (fName?.isEmpty ?? true) {
-                return 'Enter First Name';
-              }
-              return null;
-            },
+            hintText: 'First Name',
           ),
-          const SizedBox(height: 8),
-          TextFormField(
+          CustomTextFormField(
             controller: _lastNameTEController,
-            decoration: const InputDecoration(
-              hintText: 'Last Name',
-            ),
-            validator: (String? lName) {
-              if (lName?.isEmpty ?? true) {
-                return 'Enter Last Name';
-              }
-              return null;
-            },
+            hintText: 'Last Name',
           ),
-          const SizedBox(height: 8),
-          TextFormField(
+          CustomTextFormField(
+            controller: _cusAddressTEController,
+            hintText: 'Customer Address',
+          ),
+          CustomTextFormField(
+            controller: _stateTEController,
+            hintText: 'State',
+          ),
+          CustomTextFormField(
+            controller: _postCodeTEController,
+            hintText: 'Post Code',
+          ),
+          CustomTextFormField(
+            controller: _countryTEController,
+            hintText: 'Country',
+          ),
+          CustomTextFormField(
             maxLength: 11,
-            keyboardType: TextInputType.phone,
+            keyboard: TextInputType.phone,
             controller: _mobileTEController,
-            decoration: const InputDecoration(
-              hintText: 'Mobile',
-            ),
-            validator: (String? mobile) {
-              if (mobile?.isEmpty ?? true) {
-                return 'Enter Contact Number';
-              }
-              return null;
-            },
+            hintText: 'Mobile Number',
           ),
-          const SizedBox(height: 8),
-          TextFormField(
+          CustomTextFormField(
+            controller: _cusFaxTEController,
+            hintText: 'Fax',
+          ),
+          CustomTextFormField(
             controller: _cityTEController,
-            decoration: const InputDecoration(
-              hintText: 'City',
-            ),
-            validator: (String? city) {
-              if (city?.isEmpty ?? true) {
-                return 'Enter City';
-              }
-              return null;
-            },
+            hintText: 'City',
           ),
-          const SizedBox(height: 8),
-          TextFormField(
-            maxLines: 3,
+          CustomTextFormField(
+            maxLine: 3,
+            controller: _shippingNameTEController,
+            hintText: 'Shipping Name',
+          ),
+          CustomTextFormField(
+            maxLine: 3,
             controller: _shippingAddressTEController,
-            decoration: const InputDecoration(
-              hintText: 'Shipping Address',
-            ),
-            validator: (String? address) {
-              if (address?.isEmpty ?? true) {
-                return 'Enter Shipping Address';
-              }
-              return null;
-            },
+            hintText: 'Shipping Address',
+          ),
+          CustomTextFormField(
+            controller: _shippingCityTEController,
+            hintText: 'Shipping City',
+          ),
+          CustomTextFormField(
+            controller: _shippingStateTEController,
+            hintText: 'Shipping State',
+          ),
+          CustomTextFormField(
+            controller: _shippingPostCodeTEController,
+            hintText: 'Shipping Postcode',
+          ),
+          CustomTextFormField(
+            controller: _shippingCountryTEController,
+            hintText: 'Shipping Country',
+          ),
+          CustomTextFormField(
+            controller: _shippingPhoneTEController,
+            hintText: 'Shipping Phone Number',
           ),
           const SizedBox(height: 16),
         ],
@@ -174,7 +207,17 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     _firstNameTEController.dispose();
     _lastNameTEController.dispose();
     _mobileTEController.dispose();
+    _stateTEController.dispose();
+    _postCodeTEController.dispose();
+    _countryTEController.dispose();
     _cityTEController.dispose();
+    _shippingNameTEController.dispose();
     _shippingAddressTEController.dispose();
+    _shippingCityTEController.dispose();
+    _shippingStateTEController.dispose();
+    _shippingPostCodeTEController.dispose();
+    _shippingCountryTEController.dispose();
+    _shippingPhoneTEController.dispose();
+    _cusAddressTEController.dispose();
   }
 }

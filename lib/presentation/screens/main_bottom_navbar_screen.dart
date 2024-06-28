@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:c_commerce/presentation/screens/cart_list_screen.dart';
 import 'package:c_commerce/presentation/screens/category_list_screen.dart';
+import 'package:c_commerce/presentation/screens/complete_profile_screen.dart';
 import 'package:c_commerce/presentation/screens/home_screen.dart';
 import 'package:c_commerce/presentation/screens/wish_list_screen.dart';
 import 'package:c_commerce/presentation/state_holders/category_list_controller.dart';
@@ -27,7 +28,7 @@ class _MainBottomNavBarScreenState extends State<MainBottomNavBarScreen> {
       Get.find<MainBottomNavBarController>();
 
   final List<Widget> _screens = [
-    const HomeScreen(),
+    const CompleteProfileScreen(),
     const CategoryListScreen(),
     const CartListScreen(),
     const WishListScreen(),
@@ -42,8 +43,6 @@ class _MainBottomNavBarScreenState extends State<MainBottomNavBarScreen> {
     Get.find<NewProductListController>().getNewProductList();
     Get.find<SpecialProductListController>().getSpecialProductList();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
