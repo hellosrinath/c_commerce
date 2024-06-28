@@ -1,6 +1,7 @@
 import 'package:c_commerce/data/models/cart_item_model.dart';
 import 'package:c_commerce/presentation/state_holders/cart_list_controller.dart';
 import 'package:c_commerce/presentation/utility/app_colors.dart';
+import 'package:c_commerce/presentation/utility/constants.dart';
 import 'package:c_commerce/presentation/widgets/cache_network_image.dart';
 import 'package:c_commerce/presentation/widgets/centered_circular_progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -91,9 +92,14 @@ class _CartProductItemState extends State<CartProductItem> {
                             );
                           }
                           return IconButton(
-                            onPressed: () {
-                              cartListController
-                                  .deleteCartItem(widget.cartItem.productId!);
+                            onPressed: () async {
+                              final isDelete =
+                                  await Constants.showDeleteConfirmationDialog(
+                                      context);
+                              if (isDelete) {
+                                cartListController
+                                    .deleteCartItem(widget.cartItem.productId!);
+                              }
                             },
                             icon: const Icon(Icons.delete),
                           );

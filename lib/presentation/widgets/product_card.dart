@@ -6,12 +6,17 @@ import 'package:c_commerce/presentation/widgets/wish_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+typedef DataCallback = void Function(int data);
+
 class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,
     this.showAddToWishList = true,
     required this.product,
+    this.onDelete,
   });
+
+  final DataCallback? onDelete;
 
   final bool showAddToWishList;
   final Product product;
@@ -19,6 +24,9 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onLongPress: () {
+        onDelete!(product.id!);
+      },
       onTap: () => Get.to(
         () => ProductDetailScreen(
           productId: product.id!,
