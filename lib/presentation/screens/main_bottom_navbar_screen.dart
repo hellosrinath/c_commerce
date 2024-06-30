@@ -1,20 +1,19 @@
-import 'dart:developer';
 
 import 'package:c_commerce/presentation/screens/cart_list_screen.dart';
 import 'package:c_commerce/presentation/screens/category_list_screen.dart';
 import 'package:c_commerce/presentation/screens/complete_profile_screen.dart';
-import 'package:c_commerce/presentation/screens/home_screen.dart';
 import 'package:c_commerce/presentation/screens/wish_list_screen.dart';
 import 'package:c_commerce/presentation/state_holders/category_list_controller.dart';
 import 'package:c_commerce/presentation/state_holders/home_slider_controller.dart';
 import 'package:c_commerce/presentation/state_holders/main_bottom_nav_bar_controller.dart';
 import 'package:c_commerce/presentation/state_holders/new_product_list_controller.dart';
 import 'package:c_commerce/presentation/state_holders/popular_product_list_controller.dart';
-import 'package:c_commerce/presentation/state_holders/read_profile_controller.dart';
 import 'package:c_commerce/presentation/state_holders/special_product_list_controller.dart';
-import 'package:c_commerce/presentation/utility/app_colors.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../utility/app_colors.dart';
 
 class MainBottomNavBarScreen extends StatefulWidget {
   const MainBottomNavBarScreen({super.key});
